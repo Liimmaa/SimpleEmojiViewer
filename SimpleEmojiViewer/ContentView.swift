@@ -7,15 +7,46 @@
 
 import SwiftUI
 
+enum Emoji: String, CaseIterable {
+    case 💪🏽, 🌚, 🥹, 😃, 🥂, 🎉, 👀, 😇, 😂, 🥳
+}
+
+enum EmojiExtra: String, CaseIterable {
+    case 💪🏽, 🌚, 🥹, 😃, 🥂, 🎉, 👀, 😇, 😂, 🥳
+}
+ 
 struct ContentView: View {
+    @State var emoji: Emoji = .🌚
+    @State var emojiExtra: EmojiExtra = .😇
+     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            VStack {
+                HStack {
+                    Text(emoji.rawValue)
+                        .font(.system(size: 100))
+                    Text(emojiExtra.rawValue)
+                        .font(.system(size: 100))
+                }
+                
+                VStack(spacing: 20) {
+                    Picker("Select Emoji", selection: $emoji) {
+                        ForEach(Emoji.allCases, id: \.self) { emoji in
+                            Text(emoji.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    Picker("Select Emoji", selection: $emojiExtra) {
+                        ForEach(EmojiExtra.allCases, id: \.self) { emoji in
+                            Text(emoji.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+            }
+            .navigationTitle("Emojis")
+            .padding()
         }
-        .padding()
     }
 }
 
